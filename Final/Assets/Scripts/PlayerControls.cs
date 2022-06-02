@@ -29,13 +29,12 @@ public class PlayerControls : MonoBehaviour
         ItemName = "Set";
         SlotSelected = 1;
         reftoEntrance = FindObjectOfType<EntranceManager>();
-
+        /*
         inv1 = GameObject.Find("Inventory").GetComponent<Slot1>();
         inv2 = GameObject.Find("Inventory").GetComponent<Slot2>();
         inv3 = GameObject.Find("Inventory").GetComponent<Slot3>();
         inv4 = GameObject.Find("Inventory").GetComponent<Slot4>();
-        inv5 = GameObject.Find("Inventory").GetComponent<Slot5>();
-
+        */
 
         //inv1.Current = GameObject.Find("Default");
     }
@@ -102,7 +101,7 @@ public class PlayerControls : MonoBehaviour
             SlotSelected = 5;
         }
 
-
+        /*
         if (SlotSelected == 1)
         {
             InvSelector.transform.position = new Vector3(myCamera.transform.position.x - 8, myCamera.transform.position.y + 4, 1);
@@ -119,11 +118,7 @@ public class PlayerControls : MonoBehaviour
         {
             InvSelector.transform.position = new Vector3(myCamera.transform.position.x - 5, myCamera.transform.position.y + 4, 1);
         }
-        if (SlotSelected == 5)
-        {
-            InvSelector.transform.position = new Vector3(myCamera.transform.position.x - 4, myCamera.transform.position.y + 4, 1);
-        }
-
+        */
 
         //Manager
         if (SortState == "Idle")
