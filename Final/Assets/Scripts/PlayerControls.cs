@@ -6,7 +6,7 @@ public class PlayerControls : MonoBehaviour
 {
     public bool canJump = true, Hidden = false;
     public int jumpTimer, SlotSelected;//1-5
-    float moveSpeed, gravitySpeed;
+    public  float moveSpeed, gravitySpeed;
     public GameObject Player, InvSelector;
     string playerState; // FacingLeft, FacingRight
     public string SortState;//Idle, Pickup, Sort, Set, ResetRock
@@ -29,6 +29,7 @@ public class PlayerControls : MonoBehaviour
         ItemName = "Set";
         SlotSelected = 1;
         reftoEntrance = FindObjectOfType<EntranceManager>();
+
         inv1 = GameObject.Find("Inventory").GetComponent<Slot1>();
         inv2 = GameObject.Find("Inventory").GetComponent<Slot2>();
         inv3 = GameObject.Find("Inventory").GetComponent<Slot3>();
@@ -56,24 +57,13 @@ public class PlayerControls : MonoBehaviour
 
     private void Movement()
     {
-        if (Player.transform.position.x >= -17.4f && Player.transform.position.x <= 22.5f)
+        if (Input.GetKey(KeyCode.D))
         {
-            if (Input.GetKey(KeyCode.D))
-            {
-                Player.transform.position += new Vector3(moveSpeed, 0, 0);
-            }
-            if (Input.GetKey(KeyCode.A))
-            {
-                Player.transform.position -= new Vector3(moveSpeed, 0, 0);
-            }
+            Player.transform.position += new Vector3(moveSpeed, 0, 0);
         }
-        else if (Player.transform.position.x < -17.4f)
+        if (Input.GetKey(KeyCode.A))
         {
-            Player.transform.position = new Vector3(-17.4f,Player.transform.position.y,0);
-        }
-        else if(Player.transform.position.x > 22.5f)
-        {
-            Player.transform.position = new Vector3(22.5f, Player.transform.position.y, 0);
+            Player.transform.position -= new Vector3(moveSpeed, 0, 0);
         }
 
         //Jump

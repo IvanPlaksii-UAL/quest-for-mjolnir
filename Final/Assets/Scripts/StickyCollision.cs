@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollisionMesh : MonoBehaviour
+public class StickyCollision : MonoBehaviour
 {
+
     GameManager refToManager;
     PlayerControls refToControls;
     float errorMargine, playerZ;
@@ -15,6 +16,11 @@ public class CollisionMesh : MonoBehaviour
         playerZ = refToControls.Player.transform.position.z;
     }
 
+    /*
+     * refToControls.Player.transform.parent = this.transform;
+     * refToControls.Player.transform.parent = null;
+     */
+
     void Update()
     {
         if ((refToControls.Player.GetComponent<SpriteRenderer>().bounds.min.y >= (this.GetComponent<SpriteRenderer>().bounds.max.y - errorMargine)))
@@ -24,8 +30,13 @@ public class CollisionMesh : MonoBehaviour
             if (this.GetComponent<SpriteRenderer>().bounds.Intersects(refToControls.Player.GetComponent<SpriteRenderer>().bounds))
             {
                 print("standing");
+                refToControls.Player.transform.parent = this.transform;
                 refToControls.Player.transform.position = new Vector3(refToControls.Player.transform.position.x, GetComponent<SpriteRenderer>().bounds.max.y + 0.86f, playerZ);
                 refToControls.canJump = true;
+            }
+            else
+            {
+                refToControls.Player.transform.parent = null;
             }
         }
         else if ((refToControls.Player.GetComponent<SpriteRenderer>().bounds.max.y <= (this.GetComponent<SpriteRenderer>().bounds.min.y + errorMargine)))
