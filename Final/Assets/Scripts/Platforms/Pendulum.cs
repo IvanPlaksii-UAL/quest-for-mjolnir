@@ -39,12 +39,12 @@ public class Pendulum : MonoBehaviour
 
             if (swingState == "Left")
             {
-                this.transform.Rotate(0, 0, -speed);
+                this.transform.Rotate(0, 0, -speed, 0);
                 currentAngle--;
             }
             if (swingState == "Right")
             {
-                this.transform.Rotate(0, 0, speed);
+                this.transform.Rotate(0, 0, speed, 0);
                 currentAngle++;
             }
         }

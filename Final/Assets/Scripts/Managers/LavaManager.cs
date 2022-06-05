@@ -5,7 +5,7 @@ using UnityEngine;
 public class LavaManager : MonoBehaviour
 {
     PlayerControls reftoControls;
-    public GameObject Pendulum, Cracked, MovingX, MovingY;
+    public GameObject Pendulum, Cracked, MovingX, MovingY, Lava;
     public int platformType, platformSpawns;
     private float pendulumDistance, crackedDistance, xDistance, yDistance;
     Vector3 spawnPos, currentPos;
