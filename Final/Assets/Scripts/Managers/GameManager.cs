@@ -2,9 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+static class STAT
+{
+    //public string currentScene;
+
+
+
+
+
+
+}
+
 public class GameManager : MonoBehaviour
 {
-    public string currentScene; //Entrance, Lava jump
+    public string currentScene;
     public int Health;
 
     void Start()
@@ -25,6 +36,26 @@ public class GameManager : MonoBehaviour
 
         }
         if (currentScene == "Entrance")
+        {
+
+        }
+        if (currentScene == "LavaJump")
+        {
+
+        }
+        if (currentScene == "Boss")
+        {
+
+        }
+        if (currentScene == "HillSlide")
+        {
+
+        }
+        if (currentScene == "MinePuzzle")
+        {
+
+        }
+        if (currentScene == "Boss")
         {
 
         }

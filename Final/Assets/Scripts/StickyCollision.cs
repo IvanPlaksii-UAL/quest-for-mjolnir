@@ -8,45 +8,50 @@ public class StickyCollision : MonoBehaviour
     GameManager refToManager;
     PlayerControls refToControls;
     float errorMargine, playerZ;
-    public bool touching;
+    Bounds offset;
     void Start()
     {
         refToManager = FindObjectOfType<GameManager>();
         refToControls = FindObjectOfType<PlayerControls>();
         errorMargine = 0.5f; //the lower the better
         playerZ = refToControls.Player.transform.position.z;
-        touching = false;
+        offset = this.GetComponent<SpriteRenderer>().bounds;
+        offset.Expand(1.1f);
     }
 
     void Update()
     {
-        if (touching == true)
+        if ((refToControls.Player.GetComponent<SpriteRenderer>().bounds.min.y >= (this.GetComponent<SpriteRenderer>().bounds.max.y - errorMargine)))
         {
-            refToControls.Player.transform.parent = this.transform;
-            refToControls.gravitySpeed = 0;
-            refToControls.Player.transform.position = new Vector3(refToControls.Player.transform.position.x, this.GetComponent<SpriteRenderer>().bounds.max.y + 0.4f, playerZ);
+            print("botActiveM"); //debugging
+            //Y-Max Mesh
+            if (refToControls.Player.GetComponent<SpriteRenderer>().bounds.Intersects(offset))
+            {
+                print("moving");
+                refToControls.Player.transform.parent = this.transform;
+                refToControls.Player.transform.position = new Vector3(refToControls.Player.transform.position.x, GetComponent<SpriteRenderer>().bounds.max.y + 0.86f, playerZ);
+                refToControls.canJump = true;
+                refToControls.gravitySpeed = 0;
+            }
         }
-        if (touching == false)
+        else// if (!this.GetComponent<SpriteRenderer>().bounds.Intersects(offset))
         {
             refToControls.Player.transform.parent = null;
             refToControls.gravitySpeed = 0.2f;
         }
 
+        if ((refToControls.Player.GetComponent<SpriteRenderer>().bounds.max.y <= (this.GetComponent<SpriteRenderer>().bounds.min.y + errorMargine)))
+        {
+            print("topActive"); //debugging
+            //Y-Min Mesh
+            if (this.GetComponent<SpriteRenderer>().bounds.Intersects(refToControls.Player.GetComponent<SpriteRenderer>().bounds))
+            {
+                print("hithead");
+                refToControls.jumpTimer = 0;
+                refToControls.Player.transform.position = new Vector3(refToControls.Player.transform.position.x, GetComponent<SpriteRenderer>().bounds.min.y - 0.86f, playerZ);
+            }
+        }
         
-        //print("botActive"); //debugging
-        //Y-Max Mesh
-        if (this.GetComponent<SpriteRenderer>().bounds.Intersects(refToControls.Player.GetComponent<SpriteRenderer>().bounds))
-        {
-            print("standing");
-                
-            touching = true;
-            refToControls.canJump = true;
-        }
-        else
-        {
-            touching = false;
-        }
-
         if ((refToControls.Player.GetComponent<SpriteRenderer>().bounds.max.y <= (this.GetComponent<SpriteRenderer>().bounds.min.y + errorMargine)))
         {
             print("topActive"); //debugging
