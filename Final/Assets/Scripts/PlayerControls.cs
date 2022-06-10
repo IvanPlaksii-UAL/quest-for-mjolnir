@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
 {
-    public bool canJump = true, Hidden = false;
-    public int jumpTimer, SlotSelected;//1-5
+    public bool canJump = true, Hidden = false, armMovingUp;
+    public int jumpTimer, SlotSelected;//1-4
     public  float moveSpeed, gravitySpeed;
-    public GameObject Player, InvSelector;
+    public GameObject Player, arm, armJoint, invSelector;
     string playerState; // FacingLeft, FacingRight
     public string SortState;//Idle, Pickup, Sort, Set, ResetRock
     EntranceManager reftoEntrance;
+    GameManager reftoManager;
     public Slot1 inv1;
     public Slot2 inv2;
     public Slot3 inv3;
@@ -29,14 +30,17 @@ public class PlayerControls : MonoBehaviour
         ItemName = "Set";
         SlotSelected = 1;
         reftoEntrance = FindObjectOfType<EntranceManager>();
-        /*
-        inv1 = GameObject.Find("Inventory").GetComponent<Slot1>();
-        inv2 = GameObject.Find("Inventory").GetComponent<Slot2>();
-        inv3 = GameObject.Find("Inventory").GetComponent<Slot3>();
-        inv4 = GameObject.Find("Inventory").GetComponent<Slot4>();
-        */
+        reftoManager = FindObjectOfType<GameManager>();
+        if (STAT.CURRENTLVL == "Entrance")
+        {
+            inv1 = GameObject.Find("Inventory").GetComponent<Slot1>();
+            inv2 = GameObject.Find("Inventory").GetComponent<Slot2>();
+            inv3 = GameObject.Find("Inventory").GetComponent<Slot3>();
+            inv4 = GameObject.Find("Inventory").GetComponent<Slot4>();
 
-        //inv1.Current = GameObject.Find("Default");
+            inv1.Current = GameObject.Find("Default");
+        }
+        
     }
 
     // Update is called once per frame
@@ -52,6 +56,8 @@ public class PlayerControls : MonoBehaviour
 
         Movement();
         Inventory();
+
+        arm.transform.position = new Vector3(armJoint.transform.position.x, armJoint.transform.position.y, 0);
     }
 
     private void Movement()
@@ -59,10 +65,12 @@ public class PlayerControls : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             Player.transform.position += new Vector3(moveSpeed, 0, 0);
+            armMovement();
         }
         if (Input.GetKey(KeyCode.A))
         {
             Player.transform.position -= new Vector3(moveSpeed, 0, 0);
+            armMovement();
         }
 
         //Jump
@@ -101,24 +109,26 @@ public class PlayerControls : MonoBehaviour
             SlotSelected = 5;
         }
 
-        /*
-        if (SlotSelected == 1)
+        if (STAT.CURRENTLVL == "Entrance")
         {
-            InvSelector.transform.position = new Vector3(myCamera.transform.position.x - 8, myCamera.transform.position.y + 4, 1);
+            if (SlotSelected == 1)
+            {
+                invSelector.transform.position = new Vector3(myCamera.transform.position.x - 8, myCamera.transform.position.y + 4, 1);
+            }
+            if (SlotSelected == 2)
+            {
+                invSelector.transform.position = new Vector3(myCamera.transform.position.x - 7, myCamera.transform.position.y + 4, 1);
+            }
+            if (SlotSelected == 3)
+            {
+                invSelector.transform.position = new Vector3(myCamera.transform.position.x - 6, myCamera.transform.position.y + 4, 1);
+            }
+            if (SlotSelected == 4)
+            {
+                invSelector.transform.position = new Vector3(myCamera.transform.position.x - 5, myCamera.transform.position.y + 4, 1);
+            }
         }
-        if (SlotSelected == 2)
-        {
-            InvSelector.transform.position = new Vector3(myCamera.transform.position.x - 7, myCamera.transform.position.y + 4, 1);
-        }
-        if (SlotSelected == 3)
-        {
-            InvSelector.transform.position = new Vector3(myCamera.transform.position.x - 6, myCamera.transform.position.y + 4, 1);
-        }
-        if (SlotSelected == 4)
-        {
-            InvSelector.transform.position = new Vector3(myCamera.transform.position.x - 5, myCamera.transform.position.y + 4, 1);
-        }
-        */
+        
 
         //Manager
         if (SortState == "Idle")
@@ -157,6 +167,21 @@ public class PlayerControls : MonoBehaviour
             {
                 print ("No Space");
             }
+        }
+    }
+
+    private void armMovement()
+    {
+        if (armMovingUp == true)
+        {
+            arm.transform.eulerAngles += new Vector3(0, 0, 0.5f);
+            if (arm.transform.eulerAngles.z > 75) armMovingUp = false;
+        }
+
+        if (armMovingUp == false)
+        {
+            arm.transform.eulerAngles -= new Vector3(0, 0, 0.5f);
+            if (arm.transform.eulerAngles.z < 65) armMovingUp = true;
         }
     }
 }

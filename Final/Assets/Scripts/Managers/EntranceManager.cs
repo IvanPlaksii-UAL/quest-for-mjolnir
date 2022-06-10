@@ -27,6 +27,7 @@ public class EntranceManager : MonoBehaviour
         offset = Hatch.GetComponent<SpriteRenderer>().bounds;
         offset.Expand(2);
         RotateTimer = 17;
+        STAT.CURRENTLVL = "Entrance";
     }
 
     void Update()

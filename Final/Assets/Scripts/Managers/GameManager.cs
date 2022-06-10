@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-static class STAT
+public static class STAT
 {
-    //public string currentScene;
-
-
-
+    public static string CURRENTLVL;
 
 
 
@@ -20,7 +17,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        currentScene = "Menu";
+        STAT.CURRENTLVL = "Menu";
     }
 
     void Update()

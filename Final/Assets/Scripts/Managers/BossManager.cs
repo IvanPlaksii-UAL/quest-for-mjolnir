@@ -11,7 +11,7 @@ public class BossManager : MonoBehaviour
                   attackMode, //Melee, Range, Special
                   currentAttack;//
     public int fightCD, bossHealth, attackRan, attackFrame, pushBack;
-    private bool timeSet, weaponDamage, itemSpawned;
+    private bool timeSet, weaponDamage, itemSpawned, playerIntersect;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +23,7 @@ public class BossManager : MonoBehaviour
         bossHealth = 1000;
         timeSet = false;
         itemSpawned = false;
+        playerIntersect = false;
     }
 
     // Update is called once per frame
@@ -235,7 +236,32 @@ public class BossManager : MonoBehaviour
         else if (currentAttack == "Hook")
         {
             ArmPos(330, 280, 1);
-            //y scale 28, 3.5
+            if (timeSet == false && attackFrame == 0)
+            {
+                attackFrame = 250;
+                timeSet = true;
+            }
+            if (attackFrame < 200 && attackFrame > 140 && playerIntersect == false)
+            {
+                if(weapon.transform.localScale.y < 28)weapon.transform.localScale += new Vector3(0, 2, 0);
+            }
+            if (attackFrame < 140 || playerIntersect == true)
+            {
+                if (weapon.transform.localScale.y > 3.5) weapon.transform.localScale -= new Vector3(0, 3, 0);
+            }
+            if (weapon.GetComponent<SpriteRenderer>().bounds.Intersects(reftoControls.Player.GetComponent<SpriteRenderer>().bounds))
+            {
+                //deal damage
+                playerIntersect = true;
+                reftoControls.Player.transform.position += new Vector3(2, 0, 0);
+            }
+            if (attackFrame == 1)
+            {
+                fightCD = 120;
+                timeSet = false;
+                playerIntersect = false;
+                weapon.transform.localScale = new Vector3(0.5f,3.5f,1);
+            }
         }
 
     }

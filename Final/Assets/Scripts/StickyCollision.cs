@@ -16,12 +16,12 @@ public class StickyCollision : MonoBehaviour
         errorMargine = 0.5f; //the lower the better
         playerZ = refToControls.Player.transform.position.z;
         offset = this.GetComponent<SpriteRenderer>().bounds;
-        offset.Expand(1.1f);
+        offset.Expand(0.4f);
     }
 
     void Update()
     {
-        if ((refToControls.Player.GetComponent<SpriteRenderer>().bounds.min.y >= (this.GetComponent<SpriteRenderer>().bounds.max.y - errorMargine)))
+        if ((refToControls.Player.GetComponent<SpriteRenderer>().bounds.min.y >= (offset.max.y - errorMargine)))
         {
             print("botActiveM"); //debugging
             //Y-Max Mesh
