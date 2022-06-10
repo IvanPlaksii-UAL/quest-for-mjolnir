@@ -5,7 +5,7 @@ using UnityEngine;
 public class LavaManager : MonoBehaviour
 {
     PlayerControls reftoControls;
-    public GameObject Pendulum, Cracked, MovingX, MovingY, Lava;
+    public GameObject Pendulum, Cracked, MovingX, MovingY, Lava, Finish;
     public int platformType, platformSpawns;
     private float pendulumDistance, crackedDistance, xDistance, yDistance;
     Vector3 spawnPos, currentPos;
@@ -16,17 +16,19 @@ public class LavaManager : MonoBehaviour
         Application.targetFrameRate = 60;
         reftoControls = FindObjectOfType<PlayerControls>();
         platformSpawns = 10;
-        pendulumDistance = 8;
-        crackedDistance = 4;
+        pendulumDistance = 10;
+        crackedDistance = 6;
         currentPos.x = -1;
-        xDistance = 12;
+        xDistance = 13;
         yDistance = 6;
+        spawnPos = reftoControls.Player.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
         Camera.main.transform.position = new Vector3(reftoControls.Player.transform.position.x, 0, -10);//Following Player
+        if (reftoControls.Player.GetComponent<SpriteRenderer>().bounds.Intersects(Lava.GetComponent<SpriteRenderer>().bounds)) reftoControls.Player.transform.position = spawnPos;
 
         LevelBuilder();
     }
@@ -72,7 +74,7 @@ public class LavaManager : MonoBehaviour
         }
         else if (platformSpawns == 0) // Creates finish platform
         {
-
+            Instantiate(Finish, new Vector3(currentPos.x, 0, 0), Quaternion.identity);
         }
     }
 }

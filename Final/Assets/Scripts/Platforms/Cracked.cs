@@ -56,9 +56,11 @@ public class Cracked : MonoBehaviour
             this.transform.position -= new Vector3(0, 0.7f, 0);
         }
 
-        if (this.transform.position.y < -25)
+        if (refToControls.Player.transform.position.x < -4)
         {
-            Destroy(this.gameObject);
+            pillarState = "Idle";
+            fallTimer = 120;
+            this.transform.position = startingPos;
         }
     }
 }

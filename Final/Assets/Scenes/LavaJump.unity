@@ -454,8 +454,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1314319222}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.5, y: -3, z: 0}
-  m_LocalScale: {x: 50, y: 3, z: 1}
+  m_LocalPosition: {x: 55, y: -3, z: 0}
+  m_LocalScale: {x: 150, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -495,6 +495,8 @@ MonoBehaviour:
   Cracked: {fileID: 5101660439891286925, guid: 092edac4016b21e4297ba439ea5b9dbe, type: 3}
   MovingX: {fileID: 6393731351493627835, guid: 99be4246d3eb0094d855853f8fe8c0f4, type: 3}
   MovingY: {fileID: 4514000688964860955, guid: df3ecff1c508a794d949e61b12558b1b, type: 3}
+  Lava: {fileID: 1314319222}
+  Finish: {fileID: 7550315193957555360, guid: 8df7cb464840b9b41974ef7b1c5b00de, type: 3}
   platformType: 0
   platformSpawns: 0
 --- !u!4 &1579933652
@@ -525,12 +527,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canJump: 1
   Hidden: 0
+  armMovingUp: 0
   jumpTimer: 0
   SlotSelected: 0
   moveSpeed: 0
   gravitySpeed: 0
   Player: {fileID: 293037087}
-  InvSelector: {fileID: 0}
+  arm: {fileID: 0}
+  armJoint: {fileID: 0}
+  invSelector: {fileID: 0}
   SortState: 
   inv1: {fileID: 0}
   inv2: {fileID: 0}

@@ -14,7 +14,7 @@ public class MovingY : MonoBehaviour
         refToControls = FindObjectOfType<PlayerControls>();
         moveState = "Up";
         startingPos = this.transform.position;
-        moveSpeed = 0.15f;
+        moveSpeed = 0.1f;
     }
 
     // Update is called once per frame

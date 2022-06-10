@@ -8,42 +8,48 @@ public class StickyCollision : MonoBehaviour
     GameManager refToManager;
     PlayerControls refToControls;
     float errorMargine, playerZ;
+    bool parent;
     Bounds offset;
     void Start()
     {
         refToManager = FindObjectOfType<GameManager>();
         refToControls = FindObjectOfType<PlayerControls>();
-        errorMargine = 0.5f; //the lower the better
+        errorMargine = 0.2f; //the lower the better
         playerZ = refToControls.Player.transform.position.z;
         offset = this.GetComponent<SpriteRenderer>().bounds;
-        offset.Expand(0.4f);
+        offset.Expand(0.5f);
+        parent = false;
     }
 
     void Update()
     {
-        if ((refToControls.Player.GetComponent<SpriteRenderer>().bounds.min.y >= (offset.max.y - errorMargine)))
+        if ((refToControls.Player.GetComponent<SpriteRenderer>().bounds.min.y >= (this.GetComponent<SpriteRenderer>().bounds.max.y - errorMargine)))
         {
             print("botActiveM"); //debugging
             //Y-Max Mesh
-            if (refToControls.Player.GetComponent<SpriteRenderer>().bounds.Intersects(offset))
+            if (refToControls.Player.GetComponent<SpriteRenderer>().bounds.Intersects(this.GetComponent<SpriteRenderer>().bounds))
             {
                 print("moving");
-                refToControls.Player.transform.parent = this.transform;
-                refToControls.Player.transform.position = new Vector3(refToControls.Player.transform.position.x, GetComponent<SpriteRenderer>().bounds.max.y + 0.86f, playerZ);
-                refToControls.canJump = true;
                 refToControls.gravitySpeed = 0;
+                refToControls.Player.transform.parent = this.transform;
+                refToControls.Player.transform.position = new Vector3(refToControls.Player.transform.position.x, this.GetComponent<SpriteRenderer>().bounds.max.y + 0.94f, playerZ);
+                parent = true;
+                refToControls.canJump = true;
+            }
+            if ((parent == true && refToControls.Player.GetComponent<SpriteRenderer>().bounds.min.y > this.GetComponent<SpriteRenderer>().bounds.max.y + 0.5f))
+            {
+                print(":)");
+                refToControls.Player.transform.parent = null;
+                refToControls.gravitySpeed = 0.2f;
+                parent = false;
             }
         }
-        else// if (!this.GetComponent<SpriteRenderer>().bounds.Intersects(offset))
-        {
-            refToControls.Player.transform.parent = null;
-            refToControls.gravitySpeed = 0.2f;
-        }
+        
 
         if ((refToControls.Player.GetComponent<SpriteRenderer>().bounds.max.y <= (this.GetComponent<SpriteRenderer>().bounds.min.y + errorMargine)))
         {
             print("topActive"); //debugging
-            //Y-Min Mesh
+                                //Y-Min Mesh
             if (this.GetComponent<SpriteRenderer>().bounds.Intersects(refToControls.Player.GetComponent<SpriteRenderer>().bounds))
             {
                 print("hithead");
@@ -51,11 +57,11 @@ public class StickyCollision : MonoBehaviour
                 refToControls.Player.transform.position = new Vector3(refToControls.Player.transform.position.x, GetComponent<SpriteRenderer>().bounds.min.y - 0.86f, playerZ);
             }
         }
-        
+
         if ((refToControls.Player.GetComponent<SpriteRenderer>().bounds.max.y <= (this.GetComponent<SpriteRenderer>().bounds.min.y + errorMargine)))
         {
             print("topActive"); //debugging
-            //Y-Min Mesh
+                                //Y-Min Mesh
             if (this.GetComponent<SpriteRenderer>().bounds.Intersects(refToControls.Player.GetComponent<SpriteRenderer>().bounds))
             {
                 print("hithead");
@@ -87,5 +93,6 @@ public class StickyCollision : MonoBehaviour
                 }
             }
         }
+        
     }
 }

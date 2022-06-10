@@ -57,7 +57,7 @@ public class PlayerControls : MonoBehaviour
         Movement();
         Inventory();
 
-        arm.transform.position = new Vector3(armJoint.transform.position.x, armJoint.transform.position.y, 0);
+        //arm.transform.position = new Vector3(armJoint.transform.position.x, armJoint.transform.position.y, 0);
     }
 
     private void Movement()
@@ -65,12 +65,12 @@ public class PlayerControls : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             Player.transform.position += new Vector3(moveSpeed, 0, 0);
-            armMovement();
+            //armMovement();
         }
         if (Input.GetKey(KeyCode.A))
         {
             Player.transform.position -= new Vector3(moveSpeed, 0, 0);
-            armMovement();
+            //armMovement();
         }
 
         //Jump
